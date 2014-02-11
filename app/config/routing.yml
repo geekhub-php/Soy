@@ -1,0 +1,4 @@
+soy:
+    resource: "@SoyBundle/Resources/config/routing.yml"
+    prefix:   /
+
