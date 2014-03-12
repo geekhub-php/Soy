@@ -95,16 +95,27 @@ class CardParser
 
     public function getCardData()
     {
-        $cardData = new ArrayCollection();
-        $cardData->add($this->getCardNumber());
-        $cardData->add($this->getCardName());
-        $cardData->add($this->getCardType());
-        $cardData->add($this->getCardRarity());
-        $cardData->add($this->getCardEdition());
-        $cardData->add($this->getCardArtist());
-        $cardData->add($this->getCardText());
-        $cardData->add($this->getCardImage());
-        $cardData->add($this->getCardMana());
+//        $cardData = new ArrayCollection();
+//        $cardData->add($this->getCardNumber());
+//        $cardData->add($this->getCardName());
+//        $cardData->add($this->getCardType());
+//        $cardData->add($this->getCardRarity());
+//        $cardData->add($this->getCardEdition());
+//        $cardData->add($this->getCardArtist());
+//        $cardData->add($this->getCardText());
+//        $cardData->add($this->getCardImage());
+//        $cardData->add($this->getCardMana());
+
+        $cardData[] = array(
+            'number' => $this->getCardNumber(),
+            'name' => $this->getCardName(),
+            'type' => $this->getCardType(),
+            'rarity' => $this->getCardRarity(),
+            'edition' => $this->getCardEdition(),
+            'artist' => $this->getCardArtist(),
+            'text' => $this->getCardText(),
+            'image' => $this->getCardImage(),
+            'mana' => $this->getCardMana());
 
         return $cardData;
     }

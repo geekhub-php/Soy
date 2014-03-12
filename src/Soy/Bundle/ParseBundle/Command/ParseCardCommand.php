@@ -11,10 +11,11 @@ namespace Soy\Bundle\ParseBundle\Command;
 
 use Soy\Bundle\ParseBundle\Entity\SiteUrl;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Command\Command;
+//use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
+//use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Dumper;
 
 class ParseCardCommand extends ContainerAwareCommand
 {
@@ -28,13 +29,21 @@ class ParseCardCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
-        $repository = $container->get('doctrine')->getRepository('SoyParseBundle:SiteUrl');
-        $url = $repository->findOneBy(array('id' => 420));
-
         $parser = $container->get('card_parser');
-        $parser->init($url->getUrl());
-        $parser->getCardData();
-        var_dump($parser->getCardData());exit();
+        $dumper = new Dumper();
+        $repository = $container->get('doctrine')->getRepository('SoyParseBundle:SiteUrl');
+        $card_urls = $repository->findAll();
+        $i = 0;
+
+        foreach($card_urls as $card_url){
+            $parser->init($card_url->getUrl());
+            $card_array[] = $parser->getCardData();
+            $i++;
+            if($i%10 == 0){var_dump($i);};
+        }
+
+        $yaml = $dumper->dump($card_array, 3);
+        file_put_contents('src/Soy/Bundle/SoyBundle/DataFixtures/data/cards.yml', $yaml); exit();
 
         $doctrineManager = $container->get('doctrine');
         $entityManager = $doctrineManager->getEntityManager();
@@ -43,7 +52,6 @@ class ParseCardCommand extends ContainerAwareCommand
         foreach($urls as $url){
             $entity = new SiteUrl();
             $entity->setUrl($url);
-            $entity->setLocale($lang);
             $entityManager->persist($entity);
         }
         $entityManager->flush();
