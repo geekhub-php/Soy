@@ -11,9 +11,7 @@ namespace Soy\Bundle\ParseBundle\Command;
 
 use Soy\Bundle\ParseBundle\Entity\SiteUrl;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-//use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-//use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Dumper;
 
@@ -32,28 +30,25 @@ class ParseCardCommand extends ContainerAwareCommand
         $parser = $container->get('card_parser');
         $dumper = new Dumper();
         $repository = $container->get('doctrine')->getRepository('SoyParseBundle:SiteUrl');
+//        $card_urls[] = $repository->findOneBy(array('id' => 581));
+//        $card_urls[] = $repository->findOneBy(array('id' => 583));
+//        $card_urls[] = $repository->findOneBy(array('id' => 585));
         $card_urls = $repository->findAll();
-        $i = 0;
+
+        $progress = $this->getHelperSet()->get('progress');
+        $progress->start($output, count($card_urls));
 
         foreach($card_urls as $card_url){
             $parser->init($card_url->getUrl());
+//            $card_array[] = array(
+//                'card' => $parser->getCardData()
+//            );
             $card_array[] = $parser->getCardData();
-            $i++;
-            if($i%10 == 0){var_dump($i);};
+            $progress->advance();
         }
+        $progress->finish();
 
-        $yaml = $dumper->dump($card_array, 3);
-        file_put_contents('src/Soy/Bundle/SoyBundle/DataFixtures/data/cards.yml', $yaml); exit();
-
-        $doctrineManager = $container->get('doctrine');
-        $entityManager = $doctrineManager->getEntityManager();
-        $doctrineManager->resetEntityManager();
-        $urls = $parser->getUrls();
-        foreach($urls as $url){
-            $entity = new SiteUrl();
-            $entity->setUrl($url);
-            $entityManager->persist($entity);
-        }
-        $entityManager->flush();
+        $yaml = $dumper->dump($card_array, 4);
+        file_put_contents('src/Soy/Bundle/SoyBundle/DataFixtures/data/cards.yml', $yaml);
     }
 } 

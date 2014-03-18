@@ -38,8 +38,12 @@ class CardParser
 
     public function getCardType()
     {
-        $type_mana = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[valign="top"][style="padding: 0.5em;"] > p')->first()->text();
+        $type_mana = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[valign="top"][style="padding: 0.5em;"][width="70%"] > p')->first()->text();
         $type = substr($type_mana, 0, strpos($type_mana, ','));
+
+        if(strlen($type==NULL)){
+            $type = trim($type_mana);
+        }
 
         return $type;
     }
@@ -85,28 +89,19 @@ class CardParser
     public function getCardMana()
     {
         $type_mana = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[valign="top"][style="padding: 0.5em;"] > p')->first()->text();
-        $mana = substr($type_mana, strpos($type_mana, ',')+1);
-        $mana = trim($mana, " ");
-        $mana = trim($mana, "\n");
-        $mana = trim($mana, " ");
+        if(strpos($type_mana,',')!=false){
+            $mana = substr($type_mana, strpos($type_mana, ',')+1);
+            $mana = trim($mana);
+        }else{
+            $mana = NULL;
+        }
 
         return $mana;
     }
 
     public function getCardData()
     {
-//        $cardData = new ArrayCollection();
-//        $cardData->add($this->getCardNumber());
-//        $cardData->add($this->getCardName());
-//        $cardData->add($this->getCardType());
-//        $cardData->add($this->getCardRarity());
-//        $cardData->add($this->getCardEdition());
-//        $cardData->add($this->getCardArtist());
-//        $cardData->add($this->getCardText());
-//        $cardData->add($this->getCardImage());
-//        $cardData->add($this->getCardMana());
-
-        $cardData[] = array(
+        $cardData = array(
             'number' => $this->getCardNumber(),
             'name' => $this->getCardName(),
             'type' => $this->getCardType(),
@@ -115,7 +110,8 @@ class CardParser
             'artist' => $this->getCardArtist(),
             'text' => $this->getCardText(),
             'image' => $this->getCardImage(),
-            'mana' => $this->getCardMana());
+            'mana' => $this->getCardMana()
+        );
 
         return $cardData;
     }
