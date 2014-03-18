@@ -80,7 +80,7 @@ class Card
     /**
      * @var string
      *
-     * @ORM\Column(name="mana", type="string", length=255)
+     * @ORM\Column(name="mana", type="string", length=255, nullable=true)
      */
     private $mana;
 
