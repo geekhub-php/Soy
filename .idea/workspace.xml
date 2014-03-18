@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41365a0b-8b5b-452f-a46a-31d45e4657be" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Parser/CardParser.php" afterPath="$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Parser/CardParser.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Command/ParseCardCommand.php" afterPath="$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Command/ParseCardCommand.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Soy/Bundle/SoyBundle/DataFixtures/data/cards.yml" afterPath="$PROJECT_DIR$/src/Soy/Bundle/SoyBundle/DataFixtures/data/cards.yml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Soy/Bundle/SoyBundle/DataFixtures/data/cards.yml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Soy.iws" />
@@ -31,16 +29,16 @@
       <file leaf-file-name="ParseSitemapCommand.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Command/ParseSitemapCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="33" selection-start="326" selection-end="326" vertical-scroll-proportion="-2.5416667" vertical-offset="74" max-vertical-offset="795">
+            <state line="14" column="33" selection-start="326" selection-end="326" vertical-scroll-proportion="-0.0" vertical-offset="210" max-vertical-offset="870">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ParseCardCommand.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ParseCardCommand.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Command/ParseCardCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="19" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0013869626" vertical-offset="89" max-vertical-offset="810">
+            <state line="11" column="19" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="885">
               <folding />
             </state>
           </provider>
@@ -49,7 +47,16 @@
       <file leaf-file-name="CardParser.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Parser/CardParser.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="0" selection-start="3229" selection-end="3229" vertical-scroll-proportion="-62.5" vertical-offset="0" max-vertical-offset="1815">
+            <state line="118" column="1" selection-start="3717" selection-end="3717" vertical-scroll-proportion="-26.75" vertical-offset="1083" max-vertical-offset="1815">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Card.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/SoyBundle/Entity/Card.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-5.4493756" vertical-offset="3929" max-vertical-offset="4650">
               <folding />
             </state>
           </provider>
@@ -320,6 +327,10 @@
               <option name="myItemId" value="Bundle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoyBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -343,7 +354,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ParseBundle" />
+              <option name="myItemId" value="SoyBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Soy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Soy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Soy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Bundle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -460,16 +497,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="33" selection-start="592" selection-end="592" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="900" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="22" selection-start="176" selection-end="176" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="300" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Entity/SiteUrl.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1155" />
@@ -698,38 +725,56 @@
         <state line="8" column="0" selection-start="144" selection-end="185" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="1680" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/SoyBundle/SoyBundle.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="699" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="40" selection-start="771" selection-end="771" vertical-scroll-proportion="-10.625" vertical-offset="0" max-vertical-offset="615" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="0" selection-start="50" selection-end="50" vertical-scroll-proportion="0.041666668" vertical-offset="0" max-vertical-offset="2655" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Parser/CardParser.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="0" selection-start="3229" selection-end="3229" vertical-scroll-proportion="-62.5" vertical-offset="0" max-vertical-offset="1815">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Command/ParseSitemapCommand.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="33" selection-start="326" selection-end="326" vertical-scroll-proportion="-2.5416667" vertical-offset="74" max-vertical-offset="795">
+        <state line="14" column="33" selection-start="326" selection-end="326" vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="870">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Command/ParseCardCommand.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="19" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0013869626" vertical-offset="89" max-vertical-offset="810">
+        <state line="11" column="19" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="885">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/SoyParseBundle.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="723">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="40" selection-start="771" selection-end="771" vertical-scroll-proportion="0.36480686" vertical-offset="0" max-vertical-offset="699">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/SoyBundle/SoyBundle.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="225">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/ParseBundle/Parser/CardParser.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="1" selection-start="3717" selection-end="3717" vertical-scroll-proportion="-26.75" vertical-offset="1083" max-vertical-offset="1815">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Soy/Bundle/SoyBundle/Entity/Card.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-5.4493756" vertical-offset="3929" max-vertical-offset="4650">
           <folding />
         </state>
       </provider>
