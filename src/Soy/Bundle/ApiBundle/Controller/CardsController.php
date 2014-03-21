@@ -9,19 +9,22 @@
 namespace Soy\Bundle\ApiBundle\Controller;
 
 
-use FOS\RestBundle\View\View;
+use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 
 class CardController extends Controller
 {
-    public function getCardAction($slug)
+    /**
+     * @View()
+     * @RequestParam(name="cardName",requirements="[a-z]+")
+     */
+    public function getCardAction(ParamFetcher $paramFetcher)
     {
-        $card=$this->getDoctrine()->getRepository('SoyBundle:Card')->find($slug);
-        $view = new View();
-        $view->setData($card)
-              ->setFormat('json');
-        return $this->get('fos_rest.view_handler')->handle($view);
+        $cardName = $paramFetcher->get('cardName');
+        $card = $this->getDoctrine()->getRepository('SoyBundle:Card')->find($cardName);
+        return $card;
     }
 
 
