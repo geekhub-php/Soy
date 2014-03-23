@@ -1,14 +1,19 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: vova
+ * Date: 05.03.14
+ * Time: 21:12
+ */
 
 namespace Soy\Bundle\SoyBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Card
- *
- * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Table()
  */
 class Card
 {
@@ -29,135 +34,166 @@ class Card
     private $number;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(type="string")
      */
-    private $name;
+    private $title;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
-    private $type;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="rarity", type="string", length=255)
-     */
-    private $rarity;
-
-    /**
-     * @var \stdClass
-     *
-     * @ORM\Column(name="edition", type="object")
-     */
-    private $edition;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="artist", type="string", length=255)
-     */
-    private $artist;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="text", type="text")
+     * @ORM\Column(type="text")
      */
     private $text;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="image", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Image")
      */
     private $image;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="mana", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Artist",inversedBy="cards")
+     * @ORM\JoinColumn(name="type_id",referencedColumnName="id")
+     */
+    private $artist;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $power;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $toughness;
+
+    /**
+     * @ORM\Column(type="string")
      */
     private $mana;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $rarity;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @ORM\ManyToMany(targetEntity="Format",inversedBy="cards")
+     * @ORM\JoinTable(name="cards_formats")
      */
-    public function getId()
+    private $formats;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Edition",inversedBy="cards")
+     * @ORM\JoinTable(name="cards_editions")
+     */
+    private $editions;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Type",inversedBy="cards")
+     * @ORM\JoinColumn(name="type_id",referencedColumnName="id")
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $loyalty;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Color",inversedBy="cards")
+     * @ORM\JoinTable(name="cards_colors")
+     */
+    private $colors;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $locale;
+
+    public function addColor(Color $color)
     {
-        return $this->id;
+        $color->addCard($this);
+        $this->colors[] = $color;
+    }
+
+    public function removeColor(Color $color)
+    {
+        $this->colors->removeElement($color);
+        $color->removeCard($this);
     }
 
     /**
-     * Set number
-     *
-     * @param string $number
-     * @return Card
+     * @param mixed $colors
      */
-    public function setNumber($number)
+    public function setColors($colors)
     {
-        $this->number = $number;
-    
-        return $this;
+        $this->colors = $colors;
     }
 
     /**
-     * Get number
-     *
-     * @return string 
+     * @return mixed
      */
-    public function getNumber()
+    public function getColors()
     {
-        return $this->number;
+        return $this->colors;
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Card
+     * @param mixed $loyalty
      */
-    public function setName($name)
+    public function setLoyalty($loyalty)
     {
-        $this->name = $name;
-    
-        return $this;
+        $this->loyalty = $loyalty;
     }
 
     /**
-     * Get name
-     *
-     * @return string 
+     * @return mixed
      */
-    public function getName()
+    public function getLoyalty()
     {
-        return $this->name;
+        return $this->loyalty;
     }
 
     /**
-     * Set type
-     *
-     * @param string $type
-     * @return Card
+     * @param mixed $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param mixed $editions
+     */
+    public function setEditions($editions)
+    {
+        $this->editions = $editions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEditions()
+    {
+        return $this->editions;
+    }
+
+    /**
+     * @param mixed $type
      */
     public function setType($type)
     {
         $this->type = $type;
-    
-        return $this;
     }
 
     /**
-     * Get type
-     *
-     * @return string 
+     * @return mixed
      */
     public function getType()
     {
@@ -165,114 +201,87 @@ class Card
     }
 
     /**
-     * Set rarity
-     *
-     * @param string $rarity
-     * @return Card
+     * @param mixed $mana
+     */
+    public function setMana($mana)
+    {
+        $this->mana = $mana;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMana()
+    {
+        return $this->mana;
+    }
+
+    /**
+     * @param mixed $power
+     */
+    public function setPower($power)
+    {
+        $this->power = $power;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPower()
+    {
+        return $this->power;
+    }
+
+    /**
+     * @param mixed $rarity
      */
     public function setRarity($rarity)
     {
         $this->rarity = $rarity;
-    
-        return $this;
     }
 
     /**
-     * Get rarity
-     *
-     * @return string 
+     * @return mixed
      */
     public function getRarity()
     {
         return $this->rarity;
     }
 
-    /**
-     * Set edition
-     *
-     * @param \stdClass $edition
-     * @return Card
-     */
-    public function setEdition($edition)
+
+    public function __construct()
     {
-        $this->edition = $edition;
-    
-        return $this;
+        $this->colors = new ArrayCollection();
+        $this->formats = new ArrayCollection();
+        $this->editions = new ArrayCollection();
     }
 
     /**
-     * Get edition
-     *
-     * @return \stdClass 
-     */
-    public function getEdition()
-    {
-        return $this->edition;
-    }
-
-    /**
-     * Set artist
-     *
-     * @param string $artist
-     * @return Card
+     * @param mixed $artist
      */
     public function setArtist($artist)
     {
         $this->artist = $artist;
-    
-        return $this;
     }
 
     /**
-     * Get artist
-     *
-     * @return string 
+     * @return mixed
      */
-    public function getArtist()
+    public function getArtists()
     {
         return $this->artist;
     }
 
     /**
-     * Set text
-     *
-     * @param string $text
-     * @return Card
+     * @param Image $image
      */
-    public function setText($text)
-    {
-        $this->text = $text;
-    
-        return $this;
-    }
-
-    /**
-     * Get text
-     *
-     * @return string 
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * Set image
-     *
-     * @param string $image
-     * @return Card
-     */
-    public function setImage($image)
+    public function setImage(Image $image)
     {
         $this->image = $image;
-    
-        return $this;
     }
 
     /**
-     * Get image
-     *
-     * @return string 
+     * @return mixed
      */
     public function getImage()
     {
@@ -280,25 +289,97 @@ class Card
     }
 
     /**
-     * Set mana
-     *
-     * @param string $mana
-     * @return Card
+     * @param mixed $text
      */
-    public function setMana($mana)
+    public function setText($text)
     {
-        $this->mana = $mana;
-    
-        return $this;
+        $this->text = $text;
     }
 
     /**
-     * Get mana
-     *
-     * @return string 
+     * @return mixed
      */
-    public function getMana()
+    public function getText()
     {
-        return $this->mana;
+        return $this->text;
     }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    public function addFormat(Format $format)
+    {
+        $format->addCard($this);
+        $this->formats[] = $format;
+    }
+
+    public function removeFormat(Format $format)
+    {
+        $this->formats->removeElement($format);
+        $format->removeCard($this);
+    }
+
+    public function addEdition(Edition $edition)
+    {
+        $edition->addCard($this);
+        $this->editions[] = $edition;
+    }
+
+    public function removeEdition(Edition $edition)
+    {
+        $this->editions->removeElement($edition);
+        $edition->removeCard($this);
+    }
+
+    /**
+     * @param mixed $formats
+     */
+    public function setFormats($formats)
+    {
+        $this->formats = $formats;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFormats()
+    {
+        return $this->formats;
+    }
+
+    /**
+     * @param mixed $toughness
+     */
+    public function setToughness($toughness)
+    {
+        $this->toughness = $toughness;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToughness()
+    {
+        return $this->toughness;
+    }
+
 }
