@@ -14,6 +14,24 @@ class CardParser
      */
     private $crawler;
 
+    private $otherPart;
+
+    /**
+     * @param mixed $otherPart
+     */
+    public function setCardOtherPart($otherPart)
+    {
+        $this->otherPart = $otherPart;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCardOtherPart()
+    {
+        return $this->otherPart;
+    }
+
     public function init($url)
     {
         $client = new Client($url);
@@ -23,10 +41,24 @@ class CardParser
 
     public function getCardNumber()
     {
-        $number_artist = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[style="padding: 0 0.5em;"] > small > b')->text();
-        $number = substr($number_artist, 0, strpos($number_artist, ' '));
+        $numbers = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[style="padding: 0 0.5em;"] > small > u')
+            ->eq(1)->previousAll()->filter('a')
+            ->each(function(Crawler $node){
+                return trim($node->text());
+            });
+        $numbers = array_reverse($numbers);
 
-        return $number;
+        foreach(array_keys($numbers) as $key){
+            if(strpos($numbers[$key], '#') !== 0){
+                $this->setCardOtherPart($numbers[$key]);
+                unset($numbers[$key]);
+            }
+        }
+
+        $number_artist = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[style="padding: 0 0.5em;"] > small > b')->text();
+        array_unshift($numbers, substr($number_artist, 0, strpos($number_artist, ' ')));
+
+        return $numbers;
     }
 
     public function getCardName()
@@ -48,6 +80,25 @@ class CardParser
         return $type;
     }
 
+    public function getCardPowerAndToughness()
+    {
+        $type = $this->getCardType();
+        if(!strpos($type, '/')){
+            $powerAndToughness = array(
+                'power' => NULL,
+                'toughness' => NULL
+            );
+        } else {
+            $powerAndToughness = substr($type, strpos($type, '/')-1);
+            $powerAndToughness = array(
+                'power' => substr($powerAndToughness, 0, 1),
+                'toughness' => substr($powerAndToughness, -1)
+            );
+        }
+
+        return $powerAndToughness;
+    }
+
     public function getCardRarity()
     {
         $edition_rarity = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[style="padding: 0 0.5em;"] > small > b')->eq(1)->text();
@@ -58,16 +109,31 @@ class CardParser
 
     public function getCardEdition()
     {
-        $edition_rarity = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[style="padding: 0 0.5em;"] > small > b')->eq(1)->text();
-        $edition = substr($edition_rarity, 0, strpos($edition_rarity, '(')-1);
+        $editions = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[style="padding: 0 0.5em;"] > small > u')
+            ->eq(2)->previousAll()->filter('a')
+            ->each(function(Crawler $node){
+                if(strpos($node->text(), '#')!==0){
+                    return $node->text();
+                }
+            });
 
-        return $edition;
+        foreach (array_keys($editions) as $key) {
+            if($editions[$key]==NULL or $editions[$key]==$this->getCardOtherPart()){
+                unset($editions[$key]);
+            }
+        }
+        $editions = array_reverse($editions);
+
+        $edition_rarity = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[style="padding: 0 0.5em;"] > small > b')->eq(1)->text();
+        array_unshift($editions, substr($edition_rarity, 0, strpos($edition_rarity, '(')-1));
+
+        return $editions;
     }
 
     public function getCardArtist()
     {
         $number_artist = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[style="padding: 0 0.5em;"] > small > b')->text();
-        $artist = $artist = substr($number_artist, strpos($number_artist, '(')+1, -1);
+        $artist = substr($number_artist, strpos($number_artist, '(')+1, -1);
 
         return $artist;
     }
@@ -99,6 +165,16 @@ class CardParser
         return $mana;
     }
 
+    public function getCardFormat()
+    {
+        $formats = $this->crawler->filter('body > table[style="margin: 0 0 0.5em 0;"] > tr >  td[valign="top"] > ul > li.legal')
+            ->each(function(Crawler $node){
+                return $node->text();
+            });
+
+        return $formats;
+    }
+
     public function getCardData()
     {
         $cardData = array(
@@ -110,8 +186,13 @@ class CardParser
             'artist' => $this->getCardArtist(),
             'text' => $this->getCardText(),
             'image' => $this->getCardImage(),
-            'mana' => $this->getCardMana()
+            'mana' => $this->getCardMana(),
+            'powerAndToughness' => $this->getCardPowerAndToughness(),
+            'format' => $this->getCardFormat(),
+            'otherPart' => $this->getCardOtherPart()
         );
+
+        $this->setCardOtherPart(NULL);
 
         return $cardData;
     }

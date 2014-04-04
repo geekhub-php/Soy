@@ -25,10 +25,12 @@ class Artist
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
-     * @ORM\OneToMany(targetEntity="Card",mappedBy="artist")
+     * @ORM\OneToMany(targetEntity="Card",mappedBy="artists")
      */
     private $cards;
+
     /**
      * @ORM\Column(type="string")
      */
@@ -61,6 +63,11 @@ class Artist
     public function setCards($cards)
     {
         $this->cards = $cards;
+    }
+
+    public function addCard(Card $card)
+    {
+        $this->cards[]=$card;
     }
 
     /**

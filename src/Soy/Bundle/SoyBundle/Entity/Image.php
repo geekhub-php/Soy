@@ -24,20 +24,16 @@ class Image
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="string")
      */
     private $path;
 
     /**
-     * @ORM\OneToOne(targetEntity="Card")
-     * @ORM\JoinColumn(name="card_id", referencedColumnName="id")
-     */
-    private $card;
-    /**
      * @ORM\Column(type="string")
      */
-    private $locale;
+//    private $locale;
 
     /**
      * @param mixed $locale
@@ -53,14 +49,6 @@ class Image
     public function getLocale()
     {
         return $this->locale;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCard()
-    {
-        return $this->card;
     }
 
     /**
