@@ -64,8 +64,26 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# FOSRestBundle Configuration
+fos_rest:
+    view:
+        view_response_listener: force
+    body_converter:
+            enabled: true
+    routing_loader:
+            default_format: json
+    body_converter:
+            enabled: true
+            validate: true
+            validation_errors_argument: validationErrors
+sensio_framework_extra:
+    view:    { annotations: false }
+    router:  { annotations: true }
+    request: { converters: true }
+
+# FOSUserBundle Configuration
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Soy\Bundle\UserBundle\Entity\User
-#nelmio_api_doc: ~
