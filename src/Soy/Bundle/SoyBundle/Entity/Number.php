@@ -2,17 +2,16 @@
 
 namespace Soy\Bundle\SoyBundle\Entity;
 
-use Soy\Bundle\SoyBundle\Entity\Card;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Type
+ * Edition
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Type
+class Number
 {
     /**
      * @var integer
@@ -22,13 +21,14 @@ class Type
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="string")
      */
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Card",mappedBy="type")
+     * @ORM\ManyToMany(targetEntity="Card",mappedBy="editions")
      */
     private $cards;
 
@@ -36,22 +36,6 @@ class Type
 //     * @ORM\Column(type="string")
 //     */
 //    private $locale;
-
-    /**
-     * @param mixed $locale
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
 
     public function __construct()
     {
@@ -72,11 +56,6 @@ class Type
     public function getCards()
     {
         return $this->cards;
-    }
-
-    public function addCard(Card $card)
-    {
-        $this->cards[] = $card;
     }
 
     /**
@@ -103,5 +82,16 @@ class Type
     public function getId()
     {
         return $this->id;
+    }
+
+    public function addCard(Card $card)
+    {
+        $this->cards[] = $card;
+    }
+
+    public function removeCard(Card $card)
+    {
+        $this->cards->removeElement($card);
+
     }
 }

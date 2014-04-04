@@ -9,6 +9,10 @@
 namespace Soy\Bundle\SoyBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Soy\Bundle\SoyBundle\Entity\Artist;
+use Soy\Bundle\SoyBundle\Entity\Type;
+use Soy\Bundle\SoyBundle\Entity\Edition;
+use Soy\Bundle\SoyBundle\Entity\Number;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,72 +29,101 @@ class Card
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Number",inversedBy="cards", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="cards_numbers")
+     */
+    private $numbers;
+
     /**
      * @ORM\Column(type="string")
      */
-    private $title;
+    private $name;
+
     /**
      * @ORM\Column(type="text")
      */
     private $text;
+
     /**
-     * @ORM\OneToOne(targetEntity="Image")
+     * @ORM\OneToOne(targetEntity="Image", inversedBy="card", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
+
     /**
-     * @ORM\ManyToOne(targetEntity="Artist",inversedBy="cards")
-     * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="type_id",referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Artist",inversedBy="cards", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="artist_id",referencedColumnName="id")
      */
     private $artist;
+
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $power;
+
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $toughness;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
      */
     private $mana;
+
     /**
      * @ORM\Column(type="string")
      */
     private $rarity;
+
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $toughness;
-    /**
-     * @ORM\ManyToMany(targetEntity="Format",inversedBy="cards")
+     * @ORM\ManyToMany(targetEntity="Format", inversedBy="cards", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="cards_formats")
      */
     private $formats;
+
     /**
-     * @ORM\ManyToMany(targetEntity="Edition",inversedBy="cards")
+     * @ORM\ManyToMany(targetEntity="Edition",inversedBy="cards", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="cards_editions")
      */
     private $editions;
+
     /**
-     * @ORM\ManyToOne(targetEntity="Type",inversedBy="cards")
-     * @ORM\JoinColumns({
+     * @ORM\ManyToOne(targetEntity="Type",inversedBy="cards", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="type_id",referencedColumnName="id")
-     * })
      */
     private $type;
+
     /**
-     * @ORM\Column(type="string")
+     * @ORM\OneToOne(targetEntity="Card", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="otherPart_id", referencedColumnName="id", nullable=true)
      */
-    private $loyalty;
-    /**
-     * @ORM\ManyToMany(targetEntity="Color",inversedBy="cards")
-     * @ORM\JoinTable(name="cards_colors")
-     */
-    private $colors;
+    private $otherPart;
+
+//    /**
+//     * @ORM\Column(type="string", nullable=true)
+//     */
+//    private $loyalty;
+//
+//    /**
+//     * @ORM\ManyToMany(targetEntity="Color",inversedBy="cards")
+//     * @ORM\JoinTable(name="cards_colors")
+//     */
+//    private $colors;
+//
+//    /**
+//     * @ORM\Column(type="string")
+//     */
+//    private $locale;
 
     public function addColor(Color $color)
     {
         $color->addCard($this);
         $this->colors[] = $color;
+
+        return $this;
     }
 
     public function removeColor(Color $color)
@@ -105,6 +138,8 @@ class Card
     public function setColors($colors)
     {
         $this->colors = $colors;
+
+        return $this;
     }
 
     /**
@@ -121,6 +156,8 @@ class Card
     public function setLoyalty($loyalty)
     {
         $this->loyalty = $loyalty;
+
+        return $this;
     }
 
     /**
@@ -132,16 +169,13 @@ class Card
     }
 
     /**
-     * @ORM\Column(type="string")
-     */
-    private $locale;
-
-    /**
      * @param mixed $locale
      */
     public function setLocale($locale)
     {
         $this->locale = $locale;
+
+        return $this;
     }
 
     /**
@@ -158,6 +192,8 @@ class Card
     public function setEditions($editions)
     {
         $this->editions = $editions;
+
+        return $this;
     }
 
     /**
@@ -169,11 +205,14 @@ class Card
     }
 
     /**
-     * @param mixed $type
+     * @param Type
      */
-    public function setType($type)
+    public function setType(Type $type)
     {
+        $type->addCard($this);
         $this->type = $type;
+
+        return $this;
     }
 
     /**
@@ -190,6 +229,8 @@ class Card
     public function setMana($mana)
     {
         $this->mana = $mana;
+
+        return $this;
     }
 
     /**
@@ -206,6 +247,8 @@ class Card
     public function setPower($power)
     {
         $this->power = $power;
+
+        return $this;
     }
 
     /**
@@ -222,6 +265,8 @@ class Card
     public function setRarity($rarity)
     {
         $this->rarity = $rarity;
+
+        return $this;
     }
 
     /**
@@ -238,6 +283,7 @@ class Card
         $this->colors = new ArrayCollection();
         $this->formats = new ArrayCollection();
         $this->editions = new ArrayCollection();
+        $this->numbers = new ArrayCollection();
     }
 
     /**
@@ -246,12 +292,23 @@ class Card
     public function setArtist($artist)
     {
         $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * @param Artist
+     */
+    public function addArtist($artist)
+    {
+        $artist->addCard($this);
+        $this->artist = $artist;
     }
 
     /**
      * @return mixed
      */
-    public function getArtists()
+    public function getArtist()
     {
         return $this->artist;
     }
@@ -262,6 +319,8 @@ class Card
     public function setImage(Image $image)
     {
         $this->image = $image;
+
+        return $this;
     }
 
     /**
@@ -278,6 +337,8 @@ class Card
     public function setText($text)
     {
         $this->text = $text;
+
+        return $this;
     }
 
     /**
@@ -289,19 +350,21 @@ class Card
     }
 
     /**
-     * @param mixed $title
+     * @param mixed $name
      */
-    public function setTitle($title)
+    public function setName($name)
     {
-        $this->title = $title;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
+        return $this->name;
     }
 
     public function getId()
@@ -309,29 +372,36 @@ class Card
         return $this->id;
     }
 
-
     public function addFormat(Format $format)
     {
         $format->addCard($this);
         $this->formats[] = $format;
+
+        return $this;
     }
 
     public function removeFormat(Format $format)
     {
         $this->formats->removeElement($format);
         $format->removeCard($this);
+
+        return $this;
     }
 
     public function addEdition(Edition $edition)
     {
         $edition->addCard($this);
         $this->editions[] = $edition;
+
+        return $this;
     }
 
     public function removeEdition(Edition $edition)
     {
         $this->editions->removeElement($edition);
         $edition->removeCard($this);
+
+        return $this;
     }
 
     /**
@@ -340,6 +410,8 @@ class Card
     public function setFormats($formats)
     {
         $this->formats = $formats;
+
+        return $this;
     }
 
     /**
@@ -356,6 +428,8 @@ class Card
     public function setToughness($toughness)
     {
         $this->toughness = $toughness;
+
+        return $this;
     }
 
     /**
@@ -365,5 +439,52 @@ class Card
     {
         return $this->toughness;
     }
+
+    /**
+     * @param string $number
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    public function addNumber(Number $number)
+    {
+        $number->addCard($this);
+        $this->numbers[] = $number;
+    }
+
+    public function removeNumber(Number $number)
+    {
+        $this->numbers->removeElement($number);
+        $number->removeCard($this);
+    }
+
+    /**
+     * @param mixed $otherPart
+     */
+    public function setOtherPart($otherPart)
+    {
+        $this->otherPart = $otherPart;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOtherPart()
+    {
+        return $this->otherPart;
+    }
+
 
 }

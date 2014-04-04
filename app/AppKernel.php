@@ -18,11 +18,11 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Soy\Bundle\SoyBundle\SoyBundle(),
             new Soy\Bundle\ParseBundle\SoyParseBundle(),
-            new Soy\Bundle\ApiBundle\SoyApiBundle(),
-            new Soy\Bundle\UserBundle\SoyUserBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

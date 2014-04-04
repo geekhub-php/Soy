@@ -21,6 +21,12 @@ class Edition
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
     /**
      * @ORM\ManyToMany(targetEntity="Card",mappedBy="editions")
      */
@@ -42,10 +48,10 @@ class Edition
         return $this->locale;
     }
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $locale;
+//    /**
+//     * @ORM\Column(type="string")
+//     */
+//    private $locale;
 
     public function __construct()
     {
@@ -83,11 +89,6 @@ class Edition
     {
         return $this->name;
     }
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $name;
 
     /**
      * Get id

@@ -26,14 +26,16 @@ class Format
      * @ORM\ManyToMany(targetEntity="Card",mappedBy="formats")
      */
     private $cards;
+
     /**
      * @ORM\Column(type="string")
      */
     private $name;
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $locale;
+
+//    /**
+//     * @ORM\Column(type="string")
+//     */
+//    private $locale;
 
     /**
      * @param mixed $locale

@@ -50,10 +50,12 @@ class Color
     {
         return $this->name;
     }
+
     public function addCard(Card $card)
     {
         $this->cards[]=$card;
     }
+
     public function removeCard(Card $card)
     {
         $this->cards->removeElement($card);
