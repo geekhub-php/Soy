@@ -27,7 +27,8 @@
         "friendsofsymfony/user-bundle": "dev-master",
         "hwi/oauth-bundle": "dev-master",
         "jms/serializer-bundle": "dev-master",
-        "nelmio/api-doc-bundle": "dev-master"
+        "nelmio/api-doc-bundle": "dev-master",
+        "phpunit/phpunit": "4.0.14"
     },
     "scripts": {
         "post-install-cmd": [
