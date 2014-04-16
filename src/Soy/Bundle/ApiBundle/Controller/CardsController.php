@@ -14,7 +14,7 @@ use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 
-class CardController extends Controller
+class CardsController extends Controller
 {
     /**
      * @View()
@@ -25,6 +25,14 @@ class CardController extends Controller
         $cardName = $paramFetcher->get('cardName');
         $card = $this->getDoctrine()->getRepository('SoyBundle:Card')->find($cardName);
         return $card;
+    }
+
+    /**
+     * @View()
+     */
+    public function getCardsAction()
+    {
+        return $this->getDoctrine()->getRepository('SoyBundle:Card')->findAll();
     }
 
 
