@@ -18,18 +18,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     /**
      * @View()
      * @RequestParam(name="username")
      */
-    public function getUsersAction(ParamFetcher $paramFetcher)
+    public function getUserAction(ParamFetcher $paramFetcher)
     {
         $username = $paramFetcher->get('username');
         $user=$this->getDoctrine()->getRepository('SoyUserBundle:User')->find($username);
         return $user;
 
+    }
+
+    /**
+     * @View()
+     */
+    public function getUsersAction()
+    {
+        return $this->getDoctrine()->getRepository('SoyUserBundle:User')->findAll();
     }
 
     /**
