@@ -8,24 +8,85 @@
 
 namespace Soy\Bundle\SoyBundle\Entity;
 
+use Soy\Bundle\SoyBundle\Entity\Card;
 
-class Search
+class Search extends Card
 {
-    private $request;
+//    private $request;
+//
+//    /**
+//     * @param mixed $request
+//     */
+//    public function setRequest($request)
+//    {
+//        $this->request = $request;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getRequest()
+//    {
+//        return $this->request;
+//    }
 
     /**
-     * @param mixed $request
+     * @var string
      */
-    public function setRequest($request)
+    private $number;
+
+    private $powerCompare;
+
+    private $toughnessCompare;
+
+    /**
+     * @param mixed $number
+     */
+    public function setNumber($number)
     {
-        $this->request = $request;
+        $this->number = $number;
     }
 
     /**
      * @return mixed
      */
-    public function getRequest()
+    public function getNumber()
     {
-        return $this->request;
+        return $this->number;
     }
-} 
+
+    /**
+     * @param mixed $powerCompare
+     */
+    public function setPowerCompare($powerCompare)
+    {
+        $this->powerCompare = $powerCompare;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPowerCompare()
+    {
+        return $this->powerCompare;
+    }
+
+    /**
+     * @param mixed $toughnessCompare
+     */
+    public function setToughnessCompare($toughnessCompare)
+    {
+        $this->toughnessCompare = $toughnessCompare;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToughnessCompare()
+    {
+        return $this->toughnessCompare;
+    }
+
+
+
+}

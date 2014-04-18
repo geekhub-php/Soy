@@ -47,7 +47,7 @@ class Card
     private $text;
 
     /**
-     * @ORM\OneToOne(targetEntity="Image", inversedBy="card", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
@@ -441,21 +441,21 @@ class Card
     }
 
     /**
-     * @param string $number
+     * @param mixed
      */
-    public function setNumber($number)
+    public function setNumbers($numbers)
     {
-        $this->number = $number;
+        $this->numbers = $numbers;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getNumber()
+    public function getNumbers()
     {
-        return $this->number;
+        return $this->numbers;
     }
 
     public function addNumber(Number $number)

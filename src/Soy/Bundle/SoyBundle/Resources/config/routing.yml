@@ -1,3 +1,6 @@
 soy_homepage:
     pattern:  /hello/{name}
-    defaults: { _controller: SoyBundle:Default:index }
+    defaults: { _controller: SoyBundle:Default:main }
+soy_search_page:
+    pattern: /search
+    defaults: { _controller: SoyBundle:Search:searchCards }
