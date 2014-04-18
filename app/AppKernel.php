@@ -23,7 +23,8 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Soy\Bundle\ApiBundle\SoyApiBundle(),
-            new Soy\Bundle\UserBundle\SoyUserBundle()
+            new Soy\Bundle\UserBundle\SoyUserBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

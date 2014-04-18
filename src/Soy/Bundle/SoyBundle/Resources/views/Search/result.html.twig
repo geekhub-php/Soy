@@ -1,0 +1,8 @@
+{% for card in cards %}
+    </br></br></br>
+    {{ card.name }}</br>
+    {{ card.getNumbers()|first.getName() }} {{ card.getEditions()|first.getName()}}
+
+    </br>
+    {{ card.text }}
+{% endfor %}
